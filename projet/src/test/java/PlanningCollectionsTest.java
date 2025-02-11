@@ -59,8 +59,41 @@ class PlanningCollectionsTest {
 
     @Test
     void testGetReservationsParDate() {
-        // À compléter après
+        try {
+            // Crée deux réservations pour la même date, mais avec des horaires différents
+            Horaire horaireDebut1 = new Horaire(9, 0);  // 9h00
+            Horaire horaireFin1 = new Horaire(10, 0);   // 10h00
+            Reservation res1 = new Reservation(
+                    new DateCalendrier(5, 3, 2024),
+                    new PlageHoraire(horaireDebut1, horaireFin1),
+                    "Cours Java",
+                    "Niveau 1"
+            );
+
+            Horaire horaireDebut2 = new Horaire(10, 30);  // 10h30
+            Horaire horaireFin2 = new Horaire(11, 30);   // 11h30
+            Reservation res2 = new Reservation(
+                    new DateCalendrier(5, 3, 2024),
+                    new PlageHoraire(horaireDebut2, horaireFin2),
+                    "Réunion Projet",
+                    "Niveau 1"
+            );
+
+            planning.ajout(res1);
+            planning.ajout(res2);
+
+            // Récupère les réservations pour la date 5 mars 2024
+            TreeSet<Reservation> reservations = planning.getReservations(new DateCalendrier(5, 3, 2024));
+
+            assertNotNull(reservations);
+            assertEquals(2, reservations.size()); // Vérifie qu'on a bien 2 réservations pour cette date
+            assertTrue(reservations.contains(res1));
+            assertTrue(reservations.contains(res2));
+        } catch (ExceptionPlanning e) {
+            fail("L'ajout ne devrait pas lever d'exception.");
+        }
     }
+
 
     @Test
     void testGetReservationsParIntitule() {
