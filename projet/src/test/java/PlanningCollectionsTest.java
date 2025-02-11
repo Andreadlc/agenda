@@ -15,8 +15,17 @@ class PlanningCollectionsTest {
 
     @Test
     void testAjoutReservation() {
-        // À compléter après
+        try {
+            Reservation res1 = new Reservation(new DateCalendrier(1, 1, 2021), new PlageHoraire(new Horaire(8, 0), new Horaire(9, 0)), "Cours1", "Niveau1");
+            planning.ajout(res1);
+
+            // Vérifier que la réservation est bien ajoutée
+            assertTrue(planning.getReservations(res1.getDate()).contains(res1));
+        } catch (ExceptionPlanning e) {
+            fail("L'ajout ne devrait pas lever d'exception.");
+        }
     }
+
 
     @Test
     void testGetReservationsParDate() {
