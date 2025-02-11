@@ -1,0 +1,11 @@
+#opaque {
+    -fx-background-color: white;
+}
+
+.toggle-button {
+    -fx-background-color: white;
+}
+
+.toggle-button:selected {
+    -fx-background-color: gainsboro;
+}
