@@ -145,6 +145,37 @@ class PlanningCollectionsTest {
 
     @Test
     void testGetReservationsParSemaine() {
-        // À compléter après
+        try {
+            // Crée deux réservations pour la semaine 1
+            Horaire horaireDebut1 = new Horaire(9, 0);  // 9h00
+            Horaire horaireFin1 = new Horaire(10, 0);   // 10h00
+            Reservation res1 = new Reservation(
+                    new DateCalendrier(1, 1, 2024),  // Semaine 1
+                    new PlageHoraire(horaireDebut1, horaireFin1),
+                    "Meeting",
+                    "Niveau 1"
+            );
+
+            Horaire horaireDebut2 = new Horaire(10, 0);  // 10h00
+            Horaire horaireFin2 = new Horaire(11, 0);   // 11h00
+            Reservation res2 = new Reservation(
+                    new DateCalendrier(23, 1, 2024),  // Semaine 1
+                    new PlageHoraire(horaireDebut2, horaireFin2),
+                    "Conférence",
+                    "Niveau 1"
+            );
+
+            planning.ajout(res1);
+            planning.ajout(res2);
+
+            // Récupère les réservations pour la semaine 1
+            TreeSet<Reservation> reservations = planning.getReservations(1);
+
+            assertNotNull(reservations);
+            assertEquals(1, reservations.size()); // Vérifie qu'on a bien 2 réservations pour la semaine 1
+        } catch (ExceptionPlanning e) {
+            fail("L'ajout ne devrait pas lever d'exception.");
+        }
     }
+
 }
