@@ -97,8 +97,51 @@ class PlanningCollectionsTest {
 
     @Test
     void testGetReservationsParIntitule() {
-        // À compléter après
+        try {
+            // Crée trois réservations avec des intitulés différents
+            Horaire horaireDebut1 = new Horaire(9, 0);  // 9h00
+            Horaire horaireFin1 = new Horaire(10, 0);   // 10h00
+            Reservation res1 = new Reservation(
+                    new DateCalendrier(12, 4, 2024),
+                    new PlageHoraire(horaireDebut1, horaireFin1),
+                    "Cours Java",
+                    "Niveau 1"
+            );
+
+            Horaire horaireDebut2 = new Horaire(10, 0);  // 10h00
+            Horaire horaireFin2 = new Horaire(11, 0);   // 11h00
+            Reservation res2 = new Reservation(
+                    new DateCalendrier(15, 4, 2024),
+                    new PlageHoraire(horaireDebut2, horaireFin2),
+                    "Projet Java",
+                    "Niveau 2"
+            );
+
+            Horaire horaireDebut3 = new Horaire(14, 0);  // 14h00
+            Horaire horaireFin3 = new Horaire(15, 0);   // 15h00
+            Reservation res3 = new Reservation(
+                    new DateCalendrier(18, 4, 2024),
+                    new PlageHoraire(horaireDebut3, horaireFin3),
+                    "Réunion équipe",
+                    "Niveau 1"
+            );
+
+            planning.ajout(res1);
+            planning.ajout(res2);
+            planning.ajout(res3);
+
+            // Récupère les réservations contenant "Java"
+            TreeSet<Reservation> reservations = planning.getReservations("Java");
+
+            assertNotNull(reservations);
+            assertEquals(2, reservations.size()); // Vérifie qu'on a bien 2 réservations contenant "Java"
+            assertTrue(reservations.contains(res1));
+            assertTrue(reservations.contains(res2));
+        } catch (ExceptionPlanning e) {
+            fail("L'ajout ne devrait pas lever d'exception.");
+        }
     }
+
 
     @Test
     void testGetReservationsParSemaine() {
